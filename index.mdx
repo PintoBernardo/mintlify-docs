@@ -1,59 +1,67 @@
 ---
-title: "Introduction"
-description: "Cisisk API — REST API for managing users, phone extensions, permissions, and audit logs"
+title: "Setup"
+description: "Install, configure, and run the Cisisk API"
 ---
 
-Cisisk is a REST API built with Express and MySQL. All endpoints are under `/api/v1/`.
+## Requirements
 
-## Response format
+- Node.js 18+
+- MySQL 8+
+- npm
 
-Every response follows the same envelope:
+## Clone
 
-```json
-{
-  "success": true,
-  "message": "...",
-  "data": {},
-  "metadata": {
-    "environment": "development",
-    "timestamp": "2026-06-28T12:00:00.000Z",
-    "version": "1.0.0",
-    "requestId": "550e8400-e29b-41d4-a716-446655440000",
-    "ip": "::1"
-  }
-}
+```bash
+git clone https://github.com/PintoBernardo/cisisk.git
+cd cisisk
 ```
 
-Errors include an extra `error` object:
+## Install dependencies
 
-```json
-{
-  "success": false,
-  "message": "Resource not found",
-  "error": {
-    "code": 404,
-    "message": "Resource not found"
-  }
-}
+```bash
+npm install
 ```
 
-## Authentication
+## Configure environment
 
-Protected endpoints require:
-
-```
-Authorization: Bearer <token>
+```bash
+cp .env.example .env
 ```
 
-## Status codes
+Edit `.env` with your database credentials:
 
-| Code | Meaning |
-|------|---------|
-| 200 | Success |
-| 201 | Created |
-| 401 | Unauthorized |
-| 403 | Forbidden |
-| 404 | Not found |
-| 409 | Conflict |
-| 422 | Validation error |
-| 503 | Service degraded |
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=cisisk
+
+JWT_SECRET=change-this-to-a-random-string
+```
+
+## Create the database
+
+```bash
+mysql -u root < sql/init.sql
+```
+
+This creates the `cisisk` database and all tables.
+
+## Start
+
+```bash
+npm run dev
+```
+
+The API starts on the configured port (default `3000`).
+
+## Verify
+
+```bash
+curl /api/v1/health
+```
+
+## Default permission
+
+The init script seeds a superadmin permission (level 0) with UUID `00000000-0000-0000-0000-000000000000`. Assign it to a user after creation via `POST /api/v1/user-perms`.

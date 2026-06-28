@@ -11,15 +11,9 @@
   "navigation": {
     "pages": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-        ]
-      },
-      {
         "group": "API Reference",
         "pages": [
+          "index",
           "api-reference/health",
           "api-reference/hello",
           "api-reference/auth",
