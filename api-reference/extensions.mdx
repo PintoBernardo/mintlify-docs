@@ -7,6 +7,19 @@ description: "Extension CRUD"
 
 All extension endpoints require `Authorization: Bearer <token>` and level 0 permission.
 
+Writable fields:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| type | string | yes | One of: `chan_sccp`, `chan_sip`, `chan_pjsip`, `custom` |
+| extension | string | yes | Must be unique |
+| name | string | yes | |
+| password | string | yes | Will be bcrypt-hashed |
+| description | string | no | |
+| voicemail | boolean | no | Default: `false` |
+| voicemail_passcode | string | no | Required if voicemail is `true` |
+| is_active | boolean | no | Default: `true` |
+
 ## List extensions
 
 `GET /api/v1/extensions`
@@ -23,9 +36,17 @@ All extension endpoints require `Authorization: Bearer <token>` and level 0 perm
       "type": "chan_sip",
       "extension": "100",
       "name": "Reception",
+      "description": "Main reception desk",
+      "password": null,
       "voicemail": true,
+      "voicemail_passcode": "1234",
       "is_active": true,
-      "created_at": "2026-06-28T12:00:00.000Z"
+      "created_at": "2026-06-28T12:00:00.000Z",
+      "created_by": null,
+      "updated_at": "2026-06-28T12:00:00.000Z",
+      "updated_by": null,
+      "created_ip": "::1",
+      "updated_ip": "::1"
     }
   ],
   "metadata": {}
@@ -44,7 +65,23 @@ All extension endpoints require `Authorization: Bearer <token>` and level 0 perm
 {
   "success": true,
   "message": "Extension found",
-  "data": {},
+  "data": {
+    "uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "type": "chan_sip",
+    "extension": "100",
+    "name": "Reception",
+    "description": "Main reception desk",
+    "password": null,
+    "voicemail": true,
+    "voicemail_passcode": "1234",
+    "is_active": true,
+    "created_at": "2026-06-28T12:00:00.000Z",
+    "created_by": null,
+    "updated_at": "2026-06-28T12:00:00.000Z",
+    "updated_by": null,
+    "created_ip": "::1",
+    "updated_ip": "::1"
+  },
   "metadata": {}
 }
 ```
@@ -65,7 +102,8 @@ All extension endpoints require `Authorization: Bearer <token>` and level 0 perm
   "description": "Sales team line",
   "password": "extPass123",
   "voicemail": true,
-  "voicemail_passcode": "4321"
+  "voicemail_passcode": "4321",
+  "is_active": true
 }
 ```
 
@@ -75,7 +113,23 @@ All extension endpoints require `Authorization: Bearer <token>` and level 0 perm
 {
   "success": true,
   "message": "Extension created",
-  "data": {},
+  "data": {
+    "uuid": "660e8400-e29b-41d4-a716-446655440001",
+    "type": "chan_pjsip",
+    "extension": "200",
+    "name": "Sales",
+    "description": "Sales team line",
+    "password": null,
+    "voicemail": true,
+    "voicemail_passcode": "4321",
+    "is_active": true,
+    "created_at": "2026-06-28T12:00:00.000Z",
+    "created_by": null,
+    "updated_at": "2026-06-28T12:00:00.000Z",
+    "updated_by": null,
+    "created_ip": "::1",
+    "updated_ip": "::1"
+  },
   "metadata": {}
 }
 ```
@@ -86,12 +140,15 @@ All extension endpoints require `Authorization: Bearer <token>` and level 0 perm
 
 `PUT /api/v1/extensions/{uuid}`
 
+Any subset of writable fields.
+
 ### Request
 
 ```json
 {
   "name": "Sales Hotline",
-  "voicemail": false
+  "voicemail": false,
+  "voicemail_passcode": null
 }
 ```
 
@@ -101,7 +158,23 @@ All extension endpoints require `Authorization: Bearer <token>` and level 0 perm
 {
   "success": true,
   "message": "Extension updated",
-  "data": {},
+  "data": {
+    "uuid": "660e8400-e29b-41d4-a716-446655440001",
+    "type": "chan_pjsip",
+    "extension": "200",
+    "name": "Sales Hotline",
+    "description": "Sales team line",
+    "password": null,
+    "voicemail": false,
+    "voicemail_passcode": null,
+    "is_active": true,
+    "created_at": "2026-06-28T12:00:00.000Z",
+    "created_by": null,
+    "updated_at": "2026-06-28T12:00:00.000Z",
+    "updated_by": null,
+    "created_ip": "::1",
+    "updated_ip": "::1"
+  },
   "metadata": {}
 }
 ```

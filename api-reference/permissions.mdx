@@ -22,7 +22,8 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
       "uuid": "00000000-0000-0000-0000-000000000000",
       "level": 0,
       "name": "superadmin",
-      "description": "Super administrator with all permissions"
+      "description": "Super administrator with all permissions",
+      "created_at": "2026-06-28T12:00:00.000Z"
     }
   ],
   "metadata": {}
@@ -34,6 +35,23 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 ## Get permission
 
 `GET /api/v1/permissions/{uuid}`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Permission found",
+  "data": {
+    "uuid": "00000000-0000-0000-0000-000000000000",
+    "level": 0,
+    "name": "superadmin",
+    "description": "Super administrator with all permissions",
+    "created_at": "2026-06-28T12:00:00.000Z"
+  },
+  "metadata": {}
+}
+```
 
 ---
 
@@ -57,7 +75,13 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 {
   "success": true,
   "message": "Permission created",
-  "data": {},
+  "data": {
+    "uuid": "770e8400-e29b-41d4-a716-446655440002",
+    "level": 1,
+    "name": "admin",
+    "description": "Administrator level",
+    "created_at": "2026-06-28T12:00:00.000Z"
+  },
   "metadata": {}
 }
 ```
@@ -68,11 +92,48 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 
 `PUT /api/v1/permissions/{uuid}`
 
+### Request
+
+```json
+{
+  "name": "administrator",
+  "description": "Updated description"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Permission updated",
+  "data": {
+    "uuid": "770e8400-e29b-41d4-a716-446655440002",
+    "level": 1,
+    "name": "administrator",
+    "description": "Updated description",
+    "created_at": "2026-06-28T12:00:00.000Z"
+  },
+  "metadata": {}
+}
+```
+
 ---
 
 ## Delete permission
 
 `DELETE /api/v1/permissions/{uuid}`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Permission deleted",
+  "data": null,
+  "metadata": {}
+}
+```
 
 ---
 
@@ -89,10 +150,12 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
   "success": true,
   "message": "User permission found",
   "data": {
+    "uuid": "880e8400-e29b-41d4-a716-446655440003",
     "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
     "perm_uuid": "00000000-0000-0000-0000-000000000000",
     "level": 0,
-    "perm_name": "superadmin"
+    "perm_name": "superadmin",
+    "created_at": "2026-06-28T12:00:00.000Z"
   },
   "metadata": {}
 }
@@ -119,7 +182,14 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 {
   "success": true,
   "message": "Permission assigned",
-  "data": {},
+  "data": {
+    "uuid": "880e8400-e29b-41d4-a716-446655440003",
+    "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "perm_uuid": "00000000-0000-0000-0000-000000000000",
+    "level": 0,
+    "perm_name": "superadmin",
+    "created_at": "2026-06-28T12:00:00.000Z"
+  },
   "metadata": {}
 }
 ```
@@ -129,3 +199,14 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 ## Remove permission
 
 `DELETE /api/v1/user-perms/{userUuid}`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Permission removed",
+  "data": null,
+  "metadata": {}
+}
+```
