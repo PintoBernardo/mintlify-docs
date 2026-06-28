@@ -1,0 +1,37 @@
+---
+title: "Cisco Users"
+description: "Associate PIN codes with users for Cisco phones"
+---
+
+Manage Cisco user PIN codes (bcrypt-hashed).
+
+## Get by User
+
+```
+GET /api/v1/cisco-users/by-user/:userUuid
+Authorization: Bearer <token>
+```
+
+## Upsert (Create or Update)
+
+```
+PUT /api/v1/cisco-users/:userUuid
+Authorization: Bearer <token>
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| pin_code | string | yes |
+
+```json
+{
+  "pin_code": "1234"
+}
+```
+
+## Delete
+
+```
+DELETE /api/v1/cisco-users/:userUuid
+Authorization: Bearer <token>
+```

@@ -1,0 +1,45 @@
+---
+title: "Cisco Phones"
+description: "Cisco flag for phone inventory"
+---
+
+Mark/unmark a phone as a Cisco device.
+
+## List All
+
+```
+GET /api/v1/cisco-phones
+Authorization: Bearer <token>
+```
+
+## Get by MAC
+
+```
+GET /api/v1/cisco-phones/AA:BB:CC:DD:EE:01
+Authorization: Bearer <token>
+```
+
+## Upsert
+
+```
+PUT /api/v1/cisco-phones/AA:BB:CC:DD:EE:01
+Authorization: Bearer <token>
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| cisco | boolean | yes |
+
+```json
+{
+  "mac": "AA:BB:CC:DD:EE:01",
+  "cisco": true
+}
+```
+
+## Delete
+
+```
+DELETE /api/v1/cisco-phones/AA:BB:CC:DD:EE:01
+Authorization: Bearer <token>
+```

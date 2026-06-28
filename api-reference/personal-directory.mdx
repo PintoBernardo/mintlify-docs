@@ -1,0 +1,52 @@
+---
+title: "Personal Directory"
+description: "CRUD for user personal phone directories"
+---
+
+Manage a user's personal directory contacts.
+
+## List by User
+
+```
+GET /api/v1/personal-directory/:userUuid
+Authorization: Bearer <token>
+```
+
+## Create
+
+```
+POST /api/v1/personal-directory/:userUuid
+Authorization: Bearer <token>
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| name | string | yes |
+| work | string | no |
+| mobile | string | no |
+| home | string | no |
+| email | string | no |
+| ringtone | string | no |
+
+```json
+{
+  "name": "Jane Doe",
+  "work": "+351911111111",
+  "mobile": "+351922222222",
+  "email": "jane@example.com"
+}
+```
+
+## Update
+
+```
+PUT /api/v1/personal-directory/contact/:uuid
+Authorization: Bearer <token>
+```
+
+## Delete
+
+```
+DELETE /api/v1/personal-directory/contact/:uuid
+Authorization: Bearer <token>
+```

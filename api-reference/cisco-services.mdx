@@ -1,0 +1,55 @@
+---
+title: "Cisco Services"
+description: "CRUD for Cisco service definitions"
+---
+
+Manage service definitions (e.g., directory URLs, XML services).
+
+## List All
+
+```
+GET /api/v1/cisco-services
+Authorization: Bearer <token>
+```
+
+## Get by UUID
+
+```
+GET /api/v1/cisco-services/:uuid
+Authorization: Bearer <token>
+```
+
+## Create
+
+```
+POST /api/v1/cisco-services
+Authorization: Bearer <token>
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| name | string | no |
+| url | string | no |
+| type | string | no |
+
+```json
+{
+  "name": "Company Directory",
+  "url": "https://...",
+  "type": "directory"
+}
+```
+
+## Update
+
+```
+PUT /api/v1/cisco-services/:uuid
+Authorization: Bearer <token>
+```
+
+## Delete
+
+```
+DELETE /api/v1/cisco-services/:uuid
+Authorization: Bearer <token>
+```

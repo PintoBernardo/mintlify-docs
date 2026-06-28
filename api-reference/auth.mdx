@@ -1,6 +1,6 @@
 ---
 title: "Auth"
-description: "Login, register, logout, refresh token, and current user"
+description: "Login, register, logout, and refresh token"
 ---
 
 ## Login
@@ -187,47 +187,3 @@ POST /api/v1/auth/refresh
 }
 ```
 
----
-
-## Me
-
-Get the authenticated user's profile and permission level.
-
-```
-GET /api/v1/auth/me
-Authorization: Bearer <token>
-```
-
-```json
-{
-  "success": true,
-  "message": "Authenticated user",
-  "data": {
-    "uuid": "550e8400-e29b-41d4-a716-446655440000",
-    "first_name": "Admin",
-    "last_name": "User",
-    "username": "admin",
-    "email": "admin@example.com",
-    "phone": null,
-    "lang": "en",
-    "location": null,
-    "nationality": null,
-    "timezone": "UTC",
-    "last_uuid": "550e8400-e29b-41d4-a716-446655440000",
-    "last_login_ip": "::1",
-    "last_login_at": "2026-06-28T12:00:00.000Z",
-    "last_logout_ip": null,
-    "is_active": true,
-    "created_at": "2026-06-28T12:00:00.000Z",
-    "created_by": null,
-    "updated_at": "2026-06-28T12:00:00.000Z",
-    "created_ip": "::1",
-    "updated_ip": "::1",
-    "permission": {
-      "level": 0,
-      "perm_name": "superadmin"
-    }
-  },
-  "metadata": {}
-}
-```

@@ -1,0 +1,59 @@
+---
+title: "Cisco KEM"
+description: "CRUD for Cisco Key Expansion Modules"
+---
+
+Manage Cisco Key Expansion Modules (KEMs) attached to phones.
+
+## List All
+
+```
+GET /api/v1/cisco-kem
+Authorization: Bearer <token>
+```
+
+## Get by UUID
+
+```
+GET /api/v1/cisco-kem/:uuid
+Authorization: Bearer <token>
+```
+
+## Create
+
+```
+POST /api/v1/cisco-kem
+Authorization: Bearer <token>
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| model | string | no |
+| mac | string | no |
+| ip | string (IP) | no |
+| connected_phone | string (MAC) | no |
+| software_version | string | no |
+| software_type | string | no |
+
+```json
+{
+  "model": "KEM-8800",
+  "ip": "10.0.0.11",
+  "connected_phone": "AA:BB:CC:DD:EE:01",
+  "software_version": "1.0"
+}
+```
+
+## Update
+
+```
+PUT /api/v1/cisco-kem/:uuid
+Authorization: Bearer <token>
+```
+
+## Delete
+
+```
+DELETE /api/v1/cisco-kem/:uuid
+Authorization: Bearer <token>
+```

@@ -1,0 +1,64 @@
+---
+title: "Company Directory"
+description: "CRUD for company-wide phone directory"
+---
+
+Manage the company directory shared across all devices.
+
+## List All
+
+```
+GET /api/v1/company-directory
+Authorization: Bearer <token>
+```
+
+## Get by UUID
+
+```
+GET /api/v1/company-directory/:uuid
+Authorization: Bearer <token>
+```
+
+## Create
+
+```
+POST /api/v1/company-directory
+Authorization: Bearer <token>
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| name | string | yes |
+| work | string | no |
+| mobile | string | no |
+| home | string | no |
+| email | string | no |
+| ringtone | string | no |
+| department | string | no |
+| company | string | no |
+| location | string | no |
+| building | string | no |
+
+```json
+{
+  "name": "Company Reception",
+  "work": "+351900000000",
+  "department": "Administration",
+  "company": "Cisisk",
+  "location": "Lisbon"
+}
+```
+
+## Update
+
+```
+PUT /api/v1/company-directory/:uuid
+Authorization: Bearer <token>
+```
+
+## Delete
+
+```
+DELETE /api/v1/company-directory/:uuid
+Authorization: Bearer <token>
+```

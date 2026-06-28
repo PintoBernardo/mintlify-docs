@@ -1,0 +1,97 @@
+---
+title: "Phones"
+description: "CRUD for phone inventory"
+---
+
+List, create, update, and delete phones.
+
+## List All
+
+```
+GET /api/v1/phones
+Authorization: Bearer <token>
+```
+
+```json
+{
+  "success": true,
+  "message": "5 phone(s) found",
+  "data": [
+    {
+      "mac": "AA:BB:CC:DD:EE:01",
+      "brand": "Cisco",
+      "model": "8845",
+      "description": null,
+      "name": "Office Phone",
+      "hostname": null,
+      "location": "Floor 1",
+      "phone_ip": "10.0.0.10",
+      "phone_vlan": "100",
+      "software_version": "14.2",
+      "software_type": null,
+      "is_active": true,
+      "created_at": "2026-06-28T12:00:00.000Z",
+      "updated_at": "2026-06-28T12:00:00.000Z"
+    }
+  ],
+  "metadata": {}
+}
+```
+
+## Get by MAC
+
+```
+GET /api/v1/phones/AA:BB:CC:DD:EE:01
+Authorization: Bearer <token>
+```
+
+## Create
+
+```
+POST /api/v1/phones
+Authorization: Bearer <token>
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| mac | string (MAC) | yes |
+| brand | string | no |
+| model | string | no |
+| description | string | no |
+| name | string | no |
+| hostname | string | no |
+| location | string | no |
+| phone_ip | string (IP) | no |
+| phone_vlan | string | no |
+| software_version | string | no |
+| software_type | string | no |
+| is_active | boolean | no |
+
+```json
+{
+  "mac": "AA:BB:CC:DD:EE:01",
+  "brand": "Cisco",
+  "model": "8845",
+  "name": "Office Phone",
+  "location": "Floor 1",
+  "phone_ip": "10.0.0.10",
+  "phone_vlan": "100",
+  "software_version": "14.2"
+}
+```
+
+## Update
+
+```
+PUT /api/v1/phones/AA:BB:CC:DD:EE:01
+Authorization: Bearer <token>
+```
+
+Partial update — only send changed fields.
+
+## Delete
+
+```
+DELETE /api/v1/phones/AA:BB:CC:DD:EE:01
+Authorization: Bearer <token>
+```
