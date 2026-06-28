@@ -1,0 +1,159 @@
+---
+title: "Auth"
+description: "Login, register, logout, refresh, me"
+---
+
+# Auth
+
+## Login
+
+`POST /api/v1/auth/login`
+
+### Request
+
+```json
+{
+  "username": "admin",
+  "password": "secret123"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "first_name": "Admin",
+      "last_name": "User",
+      "username": "admin",
+      "email": "admin@example.com"
+    },
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
+  },
+  "metadata": {}
+}
+```
+
+---
+
+## Register
+
+`POST /api/v1/auth/register`
+
+### Request
+
+```json
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "username": "johndoe",
+  "email": "john@example.com",
+  "password": "securePass123"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Registration successful",
+  "data": {
+    "uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "first_name": "John",
+    "last_name": "Doe",
+    "username": "johndoe",
+    "email": "john@example.com"
+  },
+  "metadata": {}
+}
+```
+
+---
+
+## Logout
+
+`POST /api/v1/auth/logout`
+
+Requires `Authorization: Bearer <token>`.
+
+### Request
+
+```json
+{
+  "refresh_token": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Logout successful",
+  "data": null,
+  "metadata": {}
+}
+```
+
+---
+
+## Refresh
+
+`POST /api/v1/auth/refresh`
+
+### Request
+
+```json
+{
+  "refresh_token": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Token refreshed",
+  "data": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIs..."
+  },
+  "metadata": {}
+}
+```
+
+---
+
+## Me
+
+`GET /api/v1/auth/me`
+
+Requires `Authorization: Bearer <token>`.
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Authenticated user",
+  "data": {
+    "uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "first_name": "Admin",
+    "last_name": "User",
+    "username": "admin",
+    "email": "admin@example.com",
+    "permission": {
+      "level": 0,
+      "perm_name": "superadmin"
+    }
+  },
+  "metadata": {}
+}
+```

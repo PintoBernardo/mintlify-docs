@@ -1,0 +1,42 @@
+---
+title: "Health"
+description: "GET /api/v1/health"
+---
+
+# Health
+
+`GET /api/v1/health`
+
+Returns service status and database connectivity.
+
+## Request
+
+```
+GET /api/v1/health
+```
+
+## Response
+
+```json
+{
+  "success": true,
+  "message": "Service is healthy",
+  "data": {
+    "status": "healthy",
+    "uptime": 1234.56,
+    "database": "connected",
+    "memory": {
+      "heapUsed": "45MB",
+      "heapTotal": "64MB",
+      "rss": "120MB"
+    }
+  },
+  "metadata": {
+    "environment": "development",
+    "timestamp": "2026-06-28T12:00:00.000Z",
+    "version": "1.0.0",
+    "requestId": "550e8400-e29b-41d4-a716-446655440000",
+    "ip": "::1"
+  }
+}
+```

@@ -1,0 +1,47 @@
+---
+title: "Audit Logs"
+description: "View system audit logs"
+---
+
+# Audit Logs
+
+All audit log endpoints require `Authorization: Bearer <token>` and level 0 permission.
+
+## List logs
+
+`GET /api/v1/audit-logs`
+
+Query parameters: `limit` (default 100, max 500), `offset` (default 0).
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "5 log(s) found",
+  "data": [
+    {
+      "uuid": "990e8400-e29b-41d4-a716-446655440004",
+      "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "action": "user.created",
+      "entity_type": "user",
+      "entity_uuid": "660e8400-e29b-41d4-a716-446655440001",
+      "payload": {
+        "username": "janesmith"
+      },
+      "ip": "::1",
+      "user_agent": "curl/8.0",
+      "created_at": "2026-06-28T12:00:00.000Z"
+    }
+  ],
+  "metadata": {}
+}
+```
+
+---
+
+## List logs for a user
+
+`GET /api/v1/audit-logs/by-user/{userUuid}`
+
+Query parameters: `limit` (default 50, max 200).

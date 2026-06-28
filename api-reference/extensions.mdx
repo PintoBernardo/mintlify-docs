@@ -1,0 +1,124 @@
+---
+title: "Extensions"
+description: "Extension CRUD"
+---
+
+# Extensions
+
+All extension endpoints require `Authorization: Bearer <token>` and level 0 permission.
+
+## List extensions
+
+`GET /api/v1/extensions`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "3 extension(s) found",
+  "data": [
+    {
+      "uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "type": "chan_sip",
+      "extension": "100",
+      "name": "Reception",
+      "voicemail": true,
+      "is_active": true,
+      "created_at": "2026-06-28T12:00:00.000Z"
+    }
+  ],
+  "metadata": {}
+}
+```
+
+---
+
+## Get extension
+
+`GET /api/v1/extensions/{uuid}`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Extension found",
+  "data": {},
+  "metadata": {}
+}
+```
+
+---
+
+## Create extension
+
+`POST /api/v1/extensions`
+
+### Request
+
+```json
+{
+  "type": "chan_pjsip",
+  "extension": "200",
+  "name": "Sales",
+  "description": "Sales team line",
+  "password": "extPass123",
+  "voicemail": true,
+  "voicemail_passcode": "4321"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Extension created",
+  "data": {},
+  "metadata": {}
+}
+```
+
+---
+
+## Update extension
+
+`PUT /api/v1/extensions/{uuid}`
+
+### Request
+
+```json
+{
+  "name": "Sales Hotline",
+  "voicemail": false
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Extension updated",
+  "data": {},
+  "metadata": {}
+}
+```
+
+---
+
+## Delete extension
+
+`DELETE /api/v1/extensions/{uuid}`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Extension deleted",
+  "data": null,
+  "metadata": {}
+}
+```

@@ -1,0 +1,131 @@
+---
+title: "Permissions"
+description: "Manage permission levels and user assignments"
+---
+
+# Permissions
+
+All permission endpoints require `Authorization: Bearer <token>` and level 0 permission.
+
+## List permissions
+
+`GET /api/v1/permissions`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "1 permission(s) found",
+  "data": [
+    {
+      "uuid": "00000000-0000-0000-0000-000000000000",
+      "level": 0,
+      "name": "superadmin",
+      "description": "Super administrator with all permissions"
+    }
+  ],
+  "metadata": {}
+}
+```
+
+---
+
+## Get permission
+
+`GET /api/v1/permissions/{uuid}`
+
+---
+
+## Create permission
+
+`POST /api/v1/permissions`
+
+### Request
+
+```json
+{
+  "level": 1,
+  "name": "admin",
+  "description": "Administrator level"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Permission created",
+  "data": {},
+  "metadata": {}
+}
+```
+
+---
+
+## Update permission
+
+`PUT /api/v1/permissions/{uuid}`
+
+---
+
+## Delete permission
+
+`DELETE /api/v1/permissions/{uuid}`
+
+---
+
+# User Permissions
+
+## Get user's permission
+
+`GET /api/v1/user-perms/{userUuid}`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "User permission found",
+  "data": {
+    "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "perm_uuid": "00000000-0000-0000-0000-000000000000",
+    "level": 0,
+    "perm_name": "superadmin"
+  },
+  "metadata": {}
+}
+```
+
+---
+
+## Assign permission
+
+`POST /api/v1/user-perms`
+
+### Request
+
+```json
+{
+  "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
+  "perm_uuid": "00000000-0000-0000-0000-000000000000"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Permission assigned",
+  "data": {},
+  "metadata": {}
+}
+```
+
+---
+
+## Remove permission
+
+`DELETE /api/v1/user-perms/{userUuid}`

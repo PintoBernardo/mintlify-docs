@@ -1,0 +1,87 @@
+---
+title: "User Extensions"
+description: "Link users to extensions"
+---
+
+# User Extensions
+
+Manages the relationship between users and extensions. All endpoints require `Authorization: Bearer <token>` and level 0 permission.
+
+## List all links
+
+`GET /api/v1/user-extensions`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "2 link(s) found",
+  "data": [
+    {
+      "uuid": "770e8400-e29b-41d4-a716-446655440002",
+      "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "extension_uuid": "660e8400-e29b-41d4-a716-446655440001",
+      "username": "admin",
+      "extension": "100",
+      "type": "chan_sip"
+    }
+  ],
+  "metadata": {}
+}
+```
+
+---
+
+## Get links by user
+
+`GET /api/v1/user-extensions/by-user/{userUuid}`
+
+---
+
+## Get links by extension
+
+`GET /api/v1/user-extensions/by-extension/{extUuid}`
+
+---
+
+## Create link
+
+`POST /api/v1/user-extensions`
+
+### Request
+
+```json
+{
+  "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
+  "extension_uuid": "660e8400-e29b-41d4-a716-446655440001"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "User linked to extension",
+  "data": {},
+  "metadata": {}
+}
+```
+
+---
+
+## Delete link
+
+`DELETE /api/v1/user-extensions/{uuid}`
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "Link deleted",
+  "data": null,
+  "metadata": {}
+}
+```

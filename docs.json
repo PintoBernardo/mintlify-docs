@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Cisisk API",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -16,19 +16,27 @@
           "index",
           "quickstart"
         ]
+      },
+      {
+        "group": "API Reference",
+        "pages": [
+          "api-reference/health",
+          "api-reference/hello",
+          "api-reference/auth",
+          "api-reference/users",
+          "api-reference/extensions",
+          "api-reference/user-extensions",
+          "api-reference/permissions",
+          "api-reference/audit-logs"
+        ]
       }
     ],
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "GitHub",
+          "href": "https://github.com/PintoBernardo/cisisk",
+          "icon": "github"
         }
       ]
     }
@@ -37,36 +45,9 @@
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
   },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
-    ]
-  },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/PintoBernardo/cisisk"
     }
   }
 }
