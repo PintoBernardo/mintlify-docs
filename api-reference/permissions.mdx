@@ -1,17 +1,24 @@
 ---
 title: "Permissions"
-description: "Manage permission levels and user assignments"
+description: "Manage permission levels and assign them to users"
 ---
 
-# Permissions
+Permissions are hierarchical — a user at level N inherits all permissions from levels 0 through N.
 
-All permission endpoints require `Authorization: Bearer <token>` and level 0 permission.
+- **Level 0**: superadmin (full access)
+- **Level 1+**: inherits all lower levels
+
+All endpoints require level 0 permission and a Bearer token.
+
+---
+
+# Permission levels
 
 ## List permissions
 
-`GET /api/v1/permissions`
-
-### Response
+```
+GET /api/v1/permissions
+```
 
 ```json
 {
@@ -34,9 +41,9 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 
 ## Get permission
 
-`GET /api/v1/permissions/{uuid}`
-
-### Response
+```
+GET /api/v1/permissions/{uuid}
+```
 
 ```json
 {
@@ -57,9 +64,15 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 
 ## Create permission
 
-`POST /api/v1/permissions`
+```
+POST /api/v1/permissions
+```
 
-### Request
+| Field | Type | Required |
+|-------|------|----------|
+| level | integer | yes |
+| name | string | yes |
+| description | string | no |
 
 ```json
 {
@@ -68,8 +81,6 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
   "description": "Administrator level"
 }
 ```
-
-### Response
 
 ```json
 {
@@ -90,9 +101,9 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 
 ## Update permission
 
-`PUT /api/v1/permissions/{uuid}`
-
-### Request
+```
+PUT /api/v1/permissions/{uuid}
+```
 
 ```json
 {
@@ -100,8 +111,6 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
   "description": "Updated description"
 }
 ```
-
-### Response
 
 ```json
 {
@@ -122,9 +131,9 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 
 ## Delete permission
 
-`DELETE /api/v1/permissions/{uuid}`
-
-### Response
+```
+DELETE /api/v1/permissions/{uuid}
+```
 
 ```json
 {
@@ -137,13 +146,13 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 
 ---
 
-# User Permissions
+# User permission assignments
 
 ## Get user's permission
 
-`GET /api/v1/user-perms/{userUuid}`
-
-### Response
+```
+GET /api/v1/user-perms/{userUuid}
+```
 
 ```json
 {
@@ -165,9 +174,16 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 
 ## Assign permission
 
-`POST /api/v1/user-perms`
+Replace the user's current permission (if any).
 
-### Request
+```
+POST /api/v1/user-perms
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| user_uuid | string | yes |
+| perm_uuid | string | yes |
 
 ```json
 {
@@ -175,8 +191,6 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
   "perm_uuid": "00000000-0000-0000-0000-000000000000"
 }
 ```
-
-### Response
 
 ```json
 {
@@ -198,9 +212,9 @@ All permission endpoints require `Authorization: Bearer <token>` and level 0 per
 
 ## Remove permission
 
-`DELETE /api/v1/user-perms/{userUuid}`
-
-### Response
+```
+DELETE /api/v1/user-perms/{userUuid}
+```
 
 ```json
 {

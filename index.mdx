@@ -3,15 +3,11 @@ title: "Introduction"
 description: "Cisisk API — REST API for managing users, phone extensions, permissions, and audit logs"
 ---
 
-Cisisk is a REST API built with Express and MySQL.
-
-## Base path
-
-All API endpoints are under `/api/v1/`.
+Cisisk is a REST API built with Express and MySQL. All endpoints are under `/api/v1/`.
 
 ## Response format
 
-Every response follows the same structure:
+Every response follows the same envelope:
 
 ```json
 {
@@ -28,7 +24,7 @@ Every response follows the same structure:
 }
 ```
 
-Error responses include an `error` object:
+Errors include an extra `error` object:
 
 ```json
 {
@@ -43,13 +39,13 @@ Error responses include an `error` object:
 
 ## Authentication
 
-Protected endpoints require a Bearer token in the `Authorization` header:
+Protected endpoints require:
 
 ```
 Authorization: Bearer <token>
 ```
 
-## Error codes
+## Status codes
 
 | Code | Meaning |
 |------|---------|

@@ -3,19 +3,13 @@ title: "Health"
 description: "GET /api/v1/health"
 ---
 
-# Health
-
-`GET /api/v1/health`
-
-Returns service status and database connectivity.
-
-## Request
+Returns service status, database connectivity, and memory usage.
 
 ```
 GET /api/v1/health
 ```
 
-## Response
+### Response
 
 ```json
 {
@@ -40,3 +34,5 @@ GET /api/v1/health
   }
 }
 ```
+
+When the database is unreachable, the API returns `503` with degraded status.

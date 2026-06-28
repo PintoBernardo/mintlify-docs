@@ -1,30 +1,32 @@
 ---
 title: "Extensions"
-description: "Extension CRUD"
+description: "Extension CRUD — create, read, update, delete phone extensions"
 ---
 
-# Extensions
+All extension endpoints require level 0 permission and a Bearer token.
 
-All extension endpoints require `Authorization: Bearer <token>` and level 0 permission.
+### Writable fields
 
-Writable fields:
+| Field | Type | Required | Default |
+|-------|------|----------|---------|
+| type | string | yes | — |
+| extension | string | yes | — |
+| name | string | yes | — |
+| password | string | yes | — |
+| description | string | no | `null` |
+| voicemail | boolean | no | `false` |
+| voicemail_passcode | string | no | `null` |
+| is_active | boolean | no | `true` |
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| type | string | yes | One of: `chan_sccp`, `chan_sip`, `chan_pjsip`, `custom` |
-| extension | string | yes | Must be unique |
-| name | string | yes | |
-| password | string | yes | Will be bcrypt-hashed |
-| description | string | no | |
-| voicemail | boolean | no | Default: `false` |
-| voicemail_passcode | string | no | Required if voicemail is `true` |
-| is_active | boolean | no | Default: `true` |
+`type` must be one of: `chan_sccp`, `chan_sip`, `chan_pjsip`, `custom`.
+
+---
 
 ## List extensions
 
-`GET /api/v1/extensions`
-
-### Response
+```
+GET /api/v1/extensions
+```
 
 ```json
 {
@@ -57,9 +59,9 @@ Writable fields:
 
 ## Get extension
 
-`GET /api/v1/extensions/{uuid}`
-
-### Response
+```
+GET /api/v1/extensions/{uuid}
+```
 
 ```json
 {
@@ -90,9 +92,9 @@ Writable fields:
 
 ## Create extension
 
-`POST /api/v1/extensions`
-
-### Request
+```
+POST /api/v1/extensions
+```
 
 ```json
 {
@@ -106,8 +108,6 @@ Writable fields:
   "is_active": true
 }
 ```
-
-### Response
 
 ```json
 {
@@ -138,11 +138,11 @@ Writable fields:
 
 ## Update extension
 
-`PUT /api/v1/extensions/{uuid}`
-
 Any subset of writable fields.
 
-### Request
+```
+PUT /api/v1/extensions/{uuid}
+```
 
 ```json
 {
@@ -151,8 +151,6 @@ Any subset of writable fields.
   "voicemail_passcode": null
 }
 ```
-
-### Response
 
 ```json
 {
@@ -183,9 +181,9 @@ Any subset of writable fields.
 
 ## Delete extension
 
-`DELETE /api/v1/extensions/{uuid}`
-
-### Response
+```
+DELETE /api/v1/extensions/{uuid}
+```
 
 ```json
 {

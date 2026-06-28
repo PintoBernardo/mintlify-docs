@@ -1,17 +1,17 @@
 ---
 title: "User Extensions"
-description: "Link users to extensions"
+description: "Link and unlink users to extensions"
 ---
 
-# User Extensions
+Manages the many-to-many relationship between users and extensions. All endpoints require level 0 permission and a Bearer token.
 
-Manages the relationship between users and extensions. All endpoints require `Authorization: Bearer <token>` and level 0 permission.
+---
 
 ## List all links
 
-`GET /api/v1/user-extensions`
-
-### Response
+```
+GET /api/v1/user-extensions
+```
 
 ```json
 {
@@ -39,9 +39,9 @@ Manages the relationship between users and extensions. All endpoints require `Au
 
 ## Get links by user
 
-`GET /api/v1/user-extensions/by-user/{userUuid}`
-
-### Response
+```
+GET /api/v1/user-extensions/by-user/{userUuid}
+```
 
 ```json
 {
@@ -66,9 +66,9 @@ Manages the relationship between users and extensions. All endpoints require `Au
 
 ## Get links by extension
 
-`GET /api/v1/user-extensions/by-extension/{extUuid}`
-
-### Response
+```
+GET /api/v1/user-extensions/by-extension/{extUuid}
+```
 
 ```json
 {
@@ -93,9 +93,14 @@ Manages the relationship between users and extensions. All endpoints require `Au
 
 ## Create link
 
-`POST /api/v1/user-extensions`
+```
+POST /api/v1/user-extensions
+```
 
-### Request
+| Field | Type | Required |
+|-------|------|----------|
+| user_uuid | string | yes |
+| extension_uuid | string | yes |
 
 ```json
 {
@@ -103,8 +108,6 @@ Manages the relationship between users and extensions. All endpoints require `Au
   "extension_uuid": "660e8400-e29b-41d4-a716-446655440001"
 }
 ```
-
-### Response
 
 ```json
 {
@@ -130,9 +133,9 @@ Manages the relationship between users and extensions. All endpoints require `Au
 
 ## Delete link
 
-`DELETE /api/v1/user-extensions/{uuid}`
-
-### Response
+```
+DELETE /api/v1/user-extensions/{uuid}
+```
 
 ```json
 {

@@ -1,33 +1,33 @@
 ---
 title: "Users"
-description: "User CRUD"
+description: "User CRUD — create, read, update, delete users"
 ---
 
-# Users
+All user endpoints require level 0 permission and a Bearer token.
 
-All user endpoints require `Authorization: Bearer <token>` and level 0 permission.
+### Writable fields
 
-Writable fields:
+| Field | Type | Required | Default |
+|-------|------|----------|---------|
+| first_name | string | yes | — |
+| last_name | string | yes | — |
+| username | string | yes | — |
+| email | string | yes | — |
+| password | string | yes | — |
+| phone | string | no | `null` |
+| lang | string | no | `"en"` |
+| location | string | no | `null` |
+| nationality | string | no | `null` |
+| timezone | string | no | `"UTC"` |
+| is_active | boolean | no | `true` |
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| first_name | string | yes | |
-| last_name | string | yes | |
-| username | string | yes | Must be unique |
-| email | string | yes | Must be unique |
-| password | string | yes | Will be bcrypt-hashed |
-| phone | string | no | |
-| lang | string | no | Default: `en` |
-| location | string | no | |
-| nationality | string | no | |
-| timezone | string | no | Default: `UTC` |
-| is_active | boolean | no | Default: `true` |
+---
 
 ## List users
 
-`GET /api/v1/users`
-
-### Response
+```
+GET /api/v1/users
+```
 
 ```json
 {
@@ -65,9 +65,9 @@ Writable fields:
 
 ## Get user
 
-`GET /api/v1/users/{uuid}`
-
-### Response
+```
+GET /api/v1/users/{uuid}
+```
 
 ```json
 {
@@ -103,9 +103,9 @@ Writable fields:
 
 ## Create user
 
-`POST /api/v1/users`
-
-### Request
+```
+POST /api/v1/users
+```
 
 ```json
 {
@@ -122,8 +122,6 @@ Writable fields:
   "is_active": true
 }
 ```
-
-### Response
 
 ```json
 {
@@ -159,11 +157,11 @@ Writable fields:
 
 ## Update user
 
-`PUT /api/v1/users/{uuid}`
-
 Any subset of writable fields.
 
-### Request
+```
+PUT /api/v1/users/{uuid}
+```
 
 ```json
 {
@@ -173,8 +171,6 @@ Any subset of writable fields.
   "timezone": "Europe/Paris"
 }
 ```
-
-### Response
 
 ```json
 {
@@ -210,9 +206,9 @@ Any subset of writable fields.
 
 ## Delete user
 
-`DELETE /api/v1/users/{uuid}`
-
-### Response
+```
+DELETE /api/v1/users/{uuid}
+```
 
 ```json
 {

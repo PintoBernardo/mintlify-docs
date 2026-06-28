@@ -1,15 +1,20 @@
 ---
 title: "Auth"
-description: "Login, register, logout, refresh, me"
+description: "Login, register, logout, refresh token, and current user"
 ---
-
-# Auth
 
 ## Login
 
-`POST /api/v1/auth/login`
+Authenticate and receive JWT tokens.
 
-### Request
+```
+POST /api/v1/auth/login
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| username | string | yes |
+| password | string | yes |
 
 ```json
 {
@@ -17,8 +22,6 @@ description: "Login, register, logout, refresh, me"
   "password": "secret123"
 }
 ```
-
-### Response
 
 ```json
 {
@@ -58,24 +61,24 @@ description: "Login, register, logout, refresh, me"
 
 ## Register
 
-`POST /api/v1/auth/register`
+Create a new user account. Requires `PUBLIC_REGISTER=true` or admin token.
 
-All writable fields:
+```
+POST /api/v1/auth/register
+```
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| first_name | string | yes | |
-| last_name | string | yes | |
-| username | string | yes | Must be unique |
-| email | string | yes | Must be unique |
-| password | string | yes | Will be bcrypt-hashed |
-| phone | string | no | |
-| lang | string | no | Default: `en` |
-| location | string | no | |
-| nationality | string | no | |
-| timezone | string | no | Default: `UTC` |
-
-### Request
+| Field | Type | Required | Default |
+|-------|------|----------|---------|
+| first_name | string | yes | — |
+| last_name | string | yes | — |
+| username | string | yes | — |
+| email | string | yes | — |
+| password | string | yes | — |
+| phone | string | no | `null` |
+| lang | string | no | `"en"` |
+| location | string | no | `null` |
+| nationality | string | no | `null` |
+| timezone | string | no | `"UTC"` |
 
 ```json
 {
@@ -91,8 +94,6 @@ All writable fields:
   "timezone": "Europe/Lisbon"
 }
 ```
-
-### Response
 
 ```json
 {
@@ -128,19 +129,22 @@ All writable fields:
 
 ## Logout
 
-`POST /api/v1/auth/logout`
+Revoke refresh token(s). Requires Bearer token.
 
-Requires `Authorization: Bearer <token>`.
+```
+POST /api/v1/auth/logout
+Authorization: Bearer <token>
+```
 
-### Request
+| Field | Type | Required |
+|-------|------|----------|
+| refresh_token | string | no (revokes all if omitted) |
 
 ```json
 {
   "refresh_token": "eyJhbGciOiJIUzI1NiIs..."
 }
 ```
-
-### Response
 
 ```json
 {
@@ -155,17 +159,21 @@ Requires `Authorization: Bearer <token>`.
 
 ## Refresh
 
-`POST /api/v1/auth/refresh`
+Exchange a refresh token for a new token pair. The old token is revoked.
 
-### Request
+```
+POST /api/v1/auth/refresh
+```
+
+| Field | Type | Required |
+|-------|------|----------|
+| refresh_token | string | yes |
 
 ```json
 {
   "refresh_token": "eyJhbGciOiJIUzI1NiIs..."
 }
 ```
-
-### Response
 
 ```json
 {
@@ -183,11 +191,12 @@ Requires `Authorization: Bearer <token>`.
 
 ## Me
 
-`GET /api/v1/auth/me`
+Get the authenticated user's profile and permission level.
 
-Requires `Authorization: Bearer <token>`.
-
-### Response
+```
+GET /api/v1/auth/me
+Authorization: Bearer <token>
+```
 
 ```json
 {

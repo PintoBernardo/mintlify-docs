@@ -3,17 +3,20 @@ title: "Audit Logs"
 description: "View system audit logs"
 ---
 
-# Audit Logs
+Every meaningful action (create, update, delete, login, logout) is logged automatically. All endpoints require level 0 permission and a Bearer token.
 
-All audit log endpoints require `Authorization: Bearer <token>` and level 0 permission.
+---
 
 ## List logs
 
-`GET /api/v1/audit-logs`
+```
+GET /api/v1/audit-logs
+```
 
-Query parameters: `limit` (default 100, max 500), `offset` (default 0).
-
-### Response
+| Query param | Type | Default | Max |
+|-------------|------|---------|-----|
+| limit | integer | 100 | 500 |
+| offset | integer | 0 | — |
 
 ```json
 {
@@ -42,11 +45,13 @@ Query parameters: `limit` (default 100, max 500), `offset` (default 0).
 
 ## List logs for a user
 
-`GET /api/v1/audit-logs/by-user/{userUuid}`
+```
+GET /api/v1/audit-logs/by-user/{userUuid}
+```
 
-Query parameters: `limit` (default 50, max 200).
-
-### Response
+| Query param | Type | Default | Max |
+|-------------|------|---------|-----|
+| limit | integer | 50 | 200 |
 
 ```json
 {
