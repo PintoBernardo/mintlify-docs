@@ -9,27 +9,57 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "API Reference",
+        "name": "API",
         "pages": [
-          "index",
-          "api-reference/health",
-          "api-reference/hello",
-          "api-reference/auth",
-          "api-reference/me",
-          "api-reference/users",
-          "api-reference/extensions",
-          "api-reference/user-extensions",
-          "api-reference/permissions",
-          "api-reference/audit-logs",
-          "api-reference/phones",
-          "api-reference/cisco-phones",
-          "api-reference/cisco-kem",
-          "api-reference/cisco-services",
-          "api-reference/cisco-users",
-          "api-reference/personal-directory",
-          "api-reference/company-directory"
+          {
+            "group": "Getting Started",
+            "pages": [
+              "index",
+              "api-reference/health",
+              "api-reference/hello"
+            ]
+          },
+          {
+            "group": "Authentication",
+            "pages": [
+              "api-reference/auth",
+              "api-reference/me"
+            ]
+          },
+          {
+            "group": "Users & Extensions",
+            "pages": [
+              "api-reference/users",
+              "api-reference/extensions",
+              "api-reference/user-extensions"
+            ]
+          },
+          {
+            "group": "Permissions & Audit",
+            "pages": [
+              "api-reference/permissions",
+              "api-reference/audit-logs"
+            ]
+          },
+          {
+            "group": "Phones & Cisco",
+            "pages": [
+              "api-reference/phones",
+              "api-reference/cisco-phones",
+              "api-reference/cisco-kem",
+              "api-reference/cisco-services",
+              "api-reference/cisco-users"
+            ]
+          },
+          {
+            "group": "Directories",
+            "pages": [
+              "api-reference/personal-directory",
+              "api-reference/company-directory"
+            ]
+          }
         ]
       }
     ],
