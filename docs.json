@@ -11,58 +11,6 @@
   "navigation": {
     "tabs": [
       {
-        "name": "API",
-        "pages": [
-          {
-            "group": "Getting Started",
-            "pages": [
-              "index",
-              "api-reference/health",
-              "api-reference/hello"
-            ]
-          },
-          {
-            "group": "Authentication",
-            "pages": [
-              "api-reference/auth",
-              "api-reference/me"
-            ]
-          },
-          {
-            "group": "Users & Extensions",
-            "pages": [
-              "api-reference/users",
-              "api-reference/extensions",
-              "api-reference/user-extensions"
-            ]
-          },
-          {
-            "group": "Permissions & Audit",
-            "pages": [
-              "api-reference/permissions",
-              "api-reference/audit-logs"
-            ]
-          },
-          {
-            "group": "Phones & Cisco",
-            "pages": [
-              "api-reference/phones",
-              "api-reference/cisco-phones",
-              "api-reference/cisco-kem",
-              "api-reference/cisco-services",
-              "api-reference/cisco-users"
-            ]
-          },
-          {
-            "group": "Directories",
-            "pages": [
-              "api-reference/personal-directory",
-              "api-reference/company-directory"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "API & Backend",
         "pages": [
           {
@@ -90,9 +38,14 @@
         ]
       },
       {
-        "tab": "Temp",
-        "pages": [
-          "untitled-page"
+        "tab": "Cisco Services",
+        "groups": [
+          {
+            "group": "Phone XML Endpoints",
+            "pages": [
+              "api-reference/cisco-phone-services"
+            ]
+          }
         ]
       }
     ],

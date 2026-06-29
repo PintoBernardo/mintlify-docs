@@ -1,0 +1,84 @@
+---
+title: "Phone XML Services"
+description: "Cisco IP phone XML endpoints for directory services"
+---
+
+Cisco IP phones consume XML directly from these endpoints. No JWT authentication — sessions are PIN-based and MAC-tracked.
+
+## Main Directory Menu
+
+```
+GET /cisco/services/dir?mac=<MAC>
+```
+
+Returns a `CiscoIPPhoneMenu` with links to Personal Directory and Corporate Directory.
+
+**Parameters**
+
+| Param | Description |
+|-------|-------------|
+| `mac` | Phone MAC address (`SEP` prefix stripped) |
+
+## Personal Directory
+
+```
+GET /cisco/services/pdir?mac=<MAC>
+```
+
+PIN-based authentication. Sessions expire after 24 hours.
+
+### Login
+
+When no session exists, the phone shows a login form. Submit username + PIN.
+
+### Directory Listing
+
+After login, returns a `CiscoIPPhoneDirectory` listing contacts.
+
+**SoftKeys:** Dial, Add, Options, Exit
+
+### Options Menu
+
+| Option | Action |
+|--------|--------|
+| Open Contact | Browse contacts and view profile |
+| Reorder Contacts | Drag-and-drop style reorder |
+| Change PIN | Current PIN → New PIN → Confirm |
+| Logout | Destroy session |
+
+### Contact Profile
+
+**SoftKeys:** Call (number picker), Edit, Delete, Exit
+
+Delete requires confirmation (Yes/No).
+
+### Add / Edit Contact
+
+Fields: Name (required), Work, Mobile, Home, Email
+
+## Corporate Directory
+
+```
+GET /cisco/services/cdir
+```
+
+Read-only company-wide directory. No authentication required.
+
+### Directory Listing
+
+Returns a `CiscoIPPhoneDirectory` with all contacts.
+
+**SoftKeys:** Dial, View, Exit
+
+### View Menu (Open Contacts)
+
+Browse contacts as a menu. Select to view profile.
+
+**Profile SoftKeys:** Call (number picker), Back, Exit
+
+## Session Management
+
+- Sessions stored in MySQL `cisco_sessions` table
+- TTL: 24 hours from last activity
+- Each session tied to a phone MAC address
+- Logout destroys the session immediately
