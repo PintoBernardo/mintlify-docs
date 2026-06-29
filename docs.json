@@ -86,15 +86,14 @@
               "api-reference/personal-directory",
               "api-reference/company-directory"
             ]
-          },
-          {
-            "group": "API",
-            "pages": []
           }
         ]
       },
       {
-        "tab": "Temp"
+        "tab": "Temp",
+        "pages": [
+          "untitled-page"
+        ]
       }
     ],
     "global": {
