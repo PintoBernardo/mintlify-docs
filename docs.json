@@ -32,7 +32,8 @@
               "api-reference/cisco-services",
               "api-reference/cisco-users",
               "api-reference/personal-directory",
-              "api-reference/company-directory"
+              "api-reference/company-directory",
+              "api-reference/phone-config"
             ]
           }
         ]

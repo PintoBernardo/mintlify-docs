@@ -1,0 +1,53 @@
+---
+title: "Phone Config"
+description: "Retrieve Cisco phone configuration files from TFTP"
+---
+
+Fetch the `SEP<mac>.cnf.xml` configuration file for a Cisco phone from the TFTP server.
+
+## Get Phone Config
+
+```
+GET /api/v1/phone-config/AA:BB:CC:DD:EE:01
+Authorization: Bearer <token>
+```
+
+| Parameter | Location | Type | Required |
+|-----------|----------|------|----------|
+| mac | path | string (MAC) | yes |
+
+### Response
+
+Returns the raw XML configuration file with `Content-Type: application/xml`.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<device>
+  <deviceType>...devices being configured...</deviceType>
+  <version>...</version>
+  <devicePool>
+    <devicePool>
+      <callManagerGroup>
+        <callManagerGroup>
+          <members>
+            <member>
+              <callManager>
+                <name>10.10.0.16</name>
+              </callManager>
+            </member>
+          </members>
+        </callManagerGroup>
+      </callManagerGroup>
+    </devicePool>
+  </devicePool>
+</device>
+```
+
+### Errors
+
+| Status | Meaning |
+|--------|---------|
+| 400 | Phone is not a Cisco phone |
+| 404 | Phone not found, or config file not found on TFTP |
+| 500 | TFTP server not configured |
+| 502 | TFTP server unreachable or timeout |
