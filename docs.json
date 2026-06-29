@@ -61,6 +61,40 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "API & Backend",
+        "pages": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "index",
+              "api-reference/health",
+              "api-reference/hello",
+              "api-reference/auth",
+              "api-reference/me",
+              "api-reference/users",
+              "api-reference/extensions",
+              "api-reference/user-extensions",
+              "api-reference/permissions",
+              "api-reference/audit-logs",
+              "api-reference/phones",
+              "api-reference/cisco-phones",
+              "api-reference/cisco-kem",
+              "api-reference/cisco-services",
+              "api-reference/cisco-users",
+              "api-reference/personal-directory",
+              "api-reference/company-directory"
+            ]
+          },
+          {
+            "group": "API",
+            "pages": []
+          }
+        ]
+      },
+      {
+        "tab": "Temp"
       }
     ],
     "global": {
