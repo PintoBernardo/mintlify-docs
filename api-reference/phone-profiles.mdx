@@ -1,0 +1,124 @@
+---
+title: "Phone Profiles"
+description: "CRUD and deploy phone profiles (Cisco SEP configs)"
+---
+
+Phone profiles are the core of Cisisk's Extension Mobility system. Each profile contains a full `SEP<MAC>.cnf.xml` config that gets deployed to a phone via FTP.
+
+## List All
+
+```
+GET /api/v1/phone-profiles
+Authorization: Bearer <token>
+```
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "name": "Reception Desk",
+      "description": "Config for the reception phone",
+      "cnf_xml": "<device ...>...</device>",
+      "compatible_models": ["8845", "8851"],
+      "software_type": "SIP",
+      "created_at": "2026-06-28T12:00:00.000Z",
+      "updated_at": "2026-06-28T12:00:00.000Z"
+    }
+  ]
+}
+```
+
+## Get by UUID
+
+```
+GET /api/v1/phone-profiles/:uuid
+Authorization: Bearer <token>
+```
+
+## Get by User
+
+```
+GET /api/v1/phone-profiles/user/:userUuid
+Authorization: Bearer <token>
+```
+
+## Create
+
+```
+POST /api/v1/phone-profiles
+Authorization: Bearer <token>
+```
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| user_uuid | string | yes | Owner of this profile |
+| name | string | yes | Display name |
+| description | string | no | Optional description |
+| cnf_xml | string | yes | Full SEP XML config |
+| compatible_models | string[] | no | Phone models this profile works with (empty = all) |
+| software_type | string | no | `SCCP`, `SIP`, or `SIPE` (empty = all) |
+
+```json
+{
+  "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Reception Desk",
+  "description": "Config for reception",
+  "cnf_xml": "<device>\n  <deviceType>...</deviceType>...\n</device>",
+  "compatible_models": ["8845", "8851"],
+  "software_type": "SIP"
+}
+```
+
+## Update
+
+```
+PUT /api/v1/phone-profiles/:uuid
+Authorization: Bearer <token>
+```
+
+Partial update — only send changed fields.
+
+## Delete
+
+```
+DELETE /api/v1/phone-profiles/:uuid
+Authorization: Bearer <token>
+```
+
+## Deploy to Phone
+
+```
+POST /api/v1/phone-profiles/switch
+Authorization: Bearer <token>
+```
+
+Triggers the full profile switch flow: deploys config via FTP, clears the phone's service session, and restarts the phone.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| profile_uuid | string | yes | UUID of the profile to deploy |
+| mac | string | yes | Phone MAC address (with or without `:` separators) |
+
+```json
+{
+  "profile_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "mac": "AA:BB:CC:DD:EE:01"
+}
+```
+
+```json
+{
+  "success": true,
+  "message": "Profile switched",
+  "data": {
+    "profile": "Reception Desk",
+    "mac": "AA:BB:CC:DD:EE:01",
+    "restart": "ok"
+  }
+}
+```
+
+The response includes the restart result — `"ok"` or an error message.

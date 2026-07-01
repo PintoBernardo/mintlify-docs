@@ -1,29 +1,31 @@
 ---
 title: "Permissions"
-description: "Manage permission levels and assign them to users"
+description: "Permission levels and user assignments"
 ---
 
-Permissions are hierarchical — a user at level N inherits all permissions from levels 0 through N.
+Cisisk uses a hierarchical permission system. Each user is assigned a single permission level. Lower numbers = more access.
 
-- **Level 0**: superadmin (full access)
-- **Level 1+**: inherits all lower levels
+| Level | Badge | Description |
+|---|---|---|
+| 0 | 🛡️ **superadmin** | Full system access — all CRUD, audit logs, user management |
+| 1+ | 👤 **user** | Future: restricted access (reserved for upcoming multi-role support) |
 
-All endpoints require level 0 permission and a Bearer token.
+All management API endpoints require **level 0** (superadmin) and a valid Bearer token.
 
 ---
 
-# Permission levels
+## Permission CRUD
 
-## List permissions
+### List permissions
 
 ```
 GET /api/v1/permissions
+Authorization: Bearer <token>
 ```
 
 ```json
 {
   "success": true,
-  "message": "1 permission(s) found",
   "data": [
     {
       "uuid": "00000000-0000-0000-0000-000000000000",
@@ -32,44 +34,26 @@ GET /api/v1/permissions
       "description": "Super administrator with all permissions",
       "created_at": "2026-06-28T12:00:00.000Z"
     }
-  ],
-  "metadata": {}
+  ]
 }
 ```
 
----
-
-## Get permission
+### Get permission
 
 ```
 GET /api/v1/permissions/{uuid}
+Authorization: Bearer <token>
 ```
 
-```json
-{
-  "success": true,
-  "message": "Permission found",
-  "data": {
-    "uuid": "00000000-0000-0000-0000-000000000000",
-    "level": 0,
-    "name": "superadmin",
-    "description": "Super administrator with all permissions",
-    "created_at": "2026-06-28T12:00:00.000Z"
-  },
-  "metadata": {}
-}
-```
-
----
-
-## Create permission
+### Create permission
 
 ```
 POST /api/v1/permissions
+Authorization: Bearer <token>
 ```
 
 | Field | Type | Required |
-|-------|------|----------|
+|---|---|---|
 | level | integer | yes |
 | name | string | yes |
 | description | string | no |
@@ -82,106 +66,54 @@ POST /api/v1/permissions
 }
 ```
 
-```json
-{
-  "success": true,
-  "message": "Permission created",
-  "data": {
-    "uuid": "770e8400-e29b-41d4-a716-446655440002",
-    "level": 1,
-    "name": "admin",
-    "description": "Administrator level",
-    "created_at": "2026-06-28T12:00:00.000Z"
-  },
-  "metadata": {}
-}
-```
-
----
-
-## Update permission
+### Update permission
 
 ```
 PUT /api/v1/permissions/{uuid}
+Authorization: Bearer <token>
 ```
 
-```json
-{
-  "name": "administrator",
-  "description": "Updated description"
-}
-```
-
-```json
-{
-  "success": true,
-  "message": "Permission updated",
-  "data": {
-    "uuid": "770e8400-e29b-41d4-a716-446655440002",
-    "level": 1,
-    "name": "administrator",
-    "description": "Updated description",
-    "created_at": "2026-06-28T12:00:00.000Z"
-  },
-  "metadata": {}
-}
-```
-
----
-
-## Delete permission
+### Delete permission
 
 ```
 DELETE /api/v1/permissions/{uuid}
-```
-
-```json
-{
-  "success": true,
-  "message": "Permission deleted",
-  "data": null,
-  "metadata": {}
-}
+Authorization: Bearer <token>
 ```
 
 ---
 
-# User permission assignments
+## User Permission Assignments
 
-## Get user's permission
+### Get user's permission
 
 ```
 GET /api/v1/user-perms/{userUuid}
+Authorization: Bearer <token>
 ```
 
 ```json
 {
   "success": true,
-  "message": "User permission found",
   "data": {
-    "uuid": "880e8400-e29b-41d4-a716-446655440003",
     "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
     "perm_uuid": "00000000-0000-0000-0000-000000000000",
     "level": 0,
-    "perm_name": "superadmin",
-    "created_at": "2026-06-28T12:00:00.000Z"
-  },
-  "metadata": {}
+    "perm_name": "superadmin"
+  }
 }
 ```
 
----
+### Assign permission
 
-## Assign permission
-
-Replace the user's current permission (if any).
+Replaces the user's current permission (if any).
 
 ```
 POST /api/v1/user-perms
+Authorization: Bearer <token>
 ```
 
 | Field | Type | Required |
-|-------|------|----------|
+|---|---|---|
 | user_uuid | string | yes |
 | perm_uuid | string | yes |
 
@@ -192,35 +124,9 @@ POST /api/v1/user-perms
 }
 ```
 
-```json
-{
-  "success": true,
-  "message": "Permission assigned",
-  "data": {
-    "uuid": "880e8400-e29b-41d4-a716-446655440003",
-    "user_uuid": "550e8400-e29b-41d4-a716-446655440000",
-    "perm_uuid": "00000000-0000-0000-0000-000000000000",
-    "level": 0,
-    "perm_name": "superadmin",
-    "created_at": "2026-06-28T12:00:00.000Z"
-  },
-  "metadata": {}
-}
-```
-
----
-
-## Remove permission
+### Remove permission
 
 ```
 DELETE /api/v1/user-perms/{userUuid}
-```
-
-```json
-{
-  "success": true,
-  "message": "Permission removed",
-  "data": null,
-  "metadata": {}
-}
+Authorization: Bearer <token>
 ```

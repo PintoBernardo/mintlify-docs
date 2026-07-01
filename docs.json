@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Cisisk API",
+  "name": "Cisisk",
   "colors": {
     "primary": "#2563EB",
     "light": "#60A5FA",
@@ -11,42 +11,69 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "API & Backend",
+        "tab": "Getting Started",
+        "pages": [
+          "index"
+        ]
+      },
+      {
+        "tab": "API Reference",
         "pages": [
           {
-            "group": "API Reference",
+            "group": "Core",
             "pages": [
-              "index",
               "api-reference/health",
               "api-reference/hello",
               "api-reference/auth",
-              "api-reference/me",
+              "api-reference/me"
+            ]
+          },
+          {
+            "group": "Administration",
+            "pages": [
               "api-reference/users",
               "api-reference/extensions",
               "api-reference/user-extensions",
               "api-reference/permissions",
-              "api-reference/audit-logs",
+              "api-reference/audit-logs"
+            ]
+          },
+          {
+            "group": "Phones & Profiles",
+            "pages": [
               "api-reference/phones",
               "api-reference/cisco-phones",
               "api-reference/cisco-kem",
-              "api-reference/cisco-services",
-              "api-reference/cisco-users",
-              "api-reference/personal-directory",
-              "api-reference/company-directory",
+              "api-reference/phone-profiles",
               "api-reference/phone-config"
+            ]
+          },
+          {
+            "group": "Cisco Services",
+            "pages": [
+              "api-reference/cisco-services",
+              "api-reference/cisco-users"
+            ]
+          },
+          {
+            "group": "Directories",
+            "pages": [
+              "api-reference/personal-directory",
+              "api-reference/company-directory"
             ]
           }
         ]
       },
       {
-        "tab": "Cisco Services",
-        "groups": [
-          {
-            "group": "Phone XML Endpoints",
-            "pages": [
-              "api-reference/cisco-phone-services"
-            ]
-          }
+        "tab": "Phone Services (XML)",
+        "pages": [
+          "api-reference/cisco-phone-services"
+        ]
+      },
+      {
+        "tab": "Frontend",
+        "pages": [
+          "frontend"
         ]
       }
     ],

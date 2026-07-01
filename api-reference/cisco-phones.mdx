@@ -1,15 +1,28 @@
 ---
 title: "Cisco Phones"
-description: "Cisco flag for phone inventory"
+description: "Cisco-specific phone configuration (software type, current profile)"
 ---
 
-Mark/unmark a phone as a Cisco device.
+Each phone automatically gets a `cisco_phone` entry on creation. This endpoint manages the extra configuration.
 
 ## List All
 
 ```
 GET /api/v1/cisco-phones
 Authorization: Bearer <token>
+```
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "mac": "AA:BB:CC:DD:EE:01",
+      "software": "SIP",
+      "current_profile_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+    }
+  ]
+}
 ```
 
 ## Get by MAC
@@ -19,21 +32,20 @@ GET /api/v1/cisco-phones/AA:BB:CC:DD:EE:01
 Authorization: Bearer <token>
 ```
 
-## Upsert
+## Update Software
 
 ```
 PUT /api/v1/cisco-phones/AA:BB:CC:DD:EE:01
 Authorization: Bearer <token>
 ```
 
-| Field | Type | Required |
-|-------|------|----------|
-| cisco | boolean | yes |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| software | string | no | `SCCP`, `SIP`, or `SIPE` |
 
 ```json
 {
-  "mac": "AA:BB:CC:DD:EE:01",
-  "cisco": true
+  "software": "SCCP"
 }
 ```
 
@@ -43,3 +55,7 @@ Authorization: Bearer <token>
 DELETE /api/v1/cisco-phones/AA:BB:CC:DD:EE:01
 Authorization: Bearer <token>
 ```
+
+Removes the Cisco configuration (software type, current profile tracking) from the phone. The phone itself is not deleted — only the `cisco_phone` entry.
+
+> **Note:** When a phone is deleted via `DELETE /api/v1/phones/:mac`, the `cisco_phone` entry is automatically removed by cascade.

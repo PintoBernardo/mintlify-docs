@@ -1,0 +1,86 @@
+---
+title: "Frontend"
+description: "Management UI — phones, profiles, directories, and services"
+---
+
+The frontend is a React SPA (Vite) that communicates with the Cisisk API via JWT-authenticated requests.
+
+## Login
+
+The login page accepts **username** + **password**. Only users with superadmin permission (level 0) can authenticate.
+
+## Management Console
+
+### Dashboard
+
+Shows system health and quick stats.
+
+### Users
+
+Manage user accounts — create, edit, delete, and assign permissions.
+
+### Extensions
+
+Manage Asterisk extensions (SCCP, SIP, PJSIP) linked to users.
+
+### Phones
+
+The phone inventory table shows all registered Cisco phones:
+
+| Column | Description |
+|---|---|
+| MAC | Phone MAC address |
+| Model | Phone model (e.g. `8845`, `7960`) |
+| Software | `SCCP`, `SIP`, or `SIPE` |
+| Current Profile | Name of the currently deployed profile (or "None") |
+| IP | Phone IP address |
+| KEMs | Number of attached Key Expansion Modules |
+| Actions | 🗂️ View config, ⚙️ Edit KEMs, ✏️ Edit, ❌ Delete |
+
+**Create/Edit Phone:** Set MAC, model, IP, location, and software type (SIP/SCCP/SIPE).
+
+**KEM Editor:** Attach Cisco Key Expansion Modules (KEM-30, KEM-80) to a phone by MAC.
+
+### Profiles
+
+Create and manage phone profiles (SEP XML configs). Each profile belongs to a user and can be restricted by:
+
+- **Compatible Models** — comma-separated list of phone models (e.g. `8845, 8851`)
+- **Software Type** — `SCCP`, `SIP`, or `SIPE` (empty = all)
+
+**Deploy:** Select a profile, choose a compatible phone, and deploy. The backend:
+1. Backs up the existing `SEP<MAC>.cnf.xml` via FTP rename
+2. Uploads the new config
+3. Restarts the phone (SIP NOTIFY for SIP/SIPE, CGI for SCCP)
+4. Clears the phone's service session (next visit to phone service forces login)
+
+### Corporate Directory
+
+Manage company-wide contacts — name, work/mobile/home numbers, email, department, location, building, ringtone.
+
+### Services
+
+Manage Cisco XML service definitions (directory URLs, etc.).
+
+## Tab Navigation
+
+| Tab | Content |
+|---|---|
+| Dashboard | System overview |
+| Users | User management |
+| Extensions | Extension management |
+| Phones | Phone inventory + current profiles + KEMs |
+| Profiles | Phone profile CRUD + deploy |
+| Corporate Directory | Company contacts |
+| Services | XML service definitions |
+
+## Authentication Flow
+
+1. Login → receives JWT + refresh token
+2. JWT attached as `Authorization: Bearer <token>` to all API calls
+3. On 401 (expired token) → auto-redirects to login page
+4. Refresh token used to obtain new JWT without re-entering credentials
+
+## API Base URL
+
+Configured via `VITE_API_URL` env var (default: `http://localhost:3000/api/v1`).

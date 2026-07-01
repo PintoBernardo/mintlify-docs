@@ -1,9 +1,18 @@
 ---
 title: "Phone XML Services"
-description: "Cisco IP phone XML endpoints for directory services"
+description: "Cisco IP phone XML endpoints — directory, profile switch, and service listing"
 ---
 
 Cisco IP phones consume XML directly from these endpoints. No JWT authentication — sessions are PIN-based and MAC-tracked.
+
+## Service List
+
+The following services are registered on the phone's **Services** button. Each has a configured name (set in the phone's SEP config XML) and URL.
+
+| Service Name | URL | Description |
+|---|---|---|
+| Corporate Directory | `http://<host>/cisco/services/cdir` | Read-only company-wide directory |
+| Profile Switch | `http://<host>/cisco/services/profile-switch` | Extension Mobility — switch active profile |
 
 ## Main Directory Menu
 
@@ -16,8 +25,8 @@ Returns a `CiscoIPPhoneMenu` with links to Personal Directory and Corporate Dire
 **Parameters**
 
 | Param | Description |
-|-------|-------------|
-| `mac` | Phone MAC address (`SEP` prefix stripped) |
+|---|---|
+| `mac` | Phone MAC address (`SEP` prefix stripped automatically) |
 
 ## Personal Directory
 
@@ -29,7 +38,7 @@ PIN-based authentication. Sessions expire after 24 hours.
 
 ### Login
 
-When no session exists, the phone shows a login form. Submit username + PIN.
+When no session exists, the phone shows a login form. Submit **Username** + **PIN**.
 
 ### Directory Listing
 
@@ -40,7 +49,7 @@ After login, returns a `CiscoIPPhoneDirectory` listing contacts.
 ### Options Menu
 
 | Option | Action |
-|--------|--------|
+|---|---|
 | Open Contact | Browse contacts and view profile |
 | Reorder Contacts | Drag-and-drop style reorder |
 | Change PIN | Current PIN → New PIN → Confirm |
@@ -76,9 +85,35 @@ Browse contacts as a menu. Select to view profile.
 
 **Profile SoftKeys:** Call (number picker), Back, Exit
 
+## Profile Switch (Extension Mobility)
+
+```
+GET /cisco/services/profile-switch?mac=<MAC>
+```
+
+An Extension Mobility alternative that deploys phone-specific configs to phones.
+
+### Flow
+
+1. **Login** — Phone prompts for Username + PIN. Validates against `cisco_users` table.
+2. **Profile List** — Shows profiles compatible with the phone's model and software type.
+3. **Select Profile** — Phone fetches the profile's XML config and deploys it via FTP (renames existing config, uploads new one).
+4. **Restart** — The phone is restarted via AMI `sip notify cisco-restart` (SIP/SIPE) or HTTP CGI `Init:Restart` (SCCP).
+
+### Model & Software Filtering
+
+Profiles are filtered by:
+- **Compatible Models** — `compatible_models` JSON column on the profile
+- **Software Type** — `software_type` column on the profile (SCCP / SIP / SIPE) vs the phone's configured software
+
+If a profile has no restrictions, it shows for all phones.
+
+**SoftKeys:** Select, Logout, Exit
+
 ## Session Management
 
 - Sessions stored in MySQL `cisco_sessions` table
 - TTL: 24 hours from last activity
 - Each session tied to a phone MAC address
 - Logout destroys the session immediately
+- Deploy from the frontend UI also destroys the session (forces login on next phone visit)

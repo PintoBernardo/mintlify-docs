@@ -1,13 +1,40 @@
 ---
 title: "Setup"
-description: "Install, configure, and run the Cisisk API"
+description: "Install, configure, and run the Cisisk platform"
 ---
+
+Cisisk is a Cisco Extension Mobility alternative. It manages phone profiles that are deployed to Cisco desk phones via FTP and triggered via AMI.
+
+## System Architecture
+
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────┐
+│  Frontend   │────▶│  Cisisk API  │────▶│   MySQL 8   │
+│  (React)    │     │  (Node.js)   │     │             │
+└─────────────┘     └──────┬───────┘     └─────────────┘
+                           │
+              ┌────────────┼────────────┐
+              ▼            ▼            ▼
+         ┌─────────┐ ┌─────────┐ ┌──────────┐
+         │  FTP    │ │  AMI    │ │  TFTP    │
+         │ Server  │ │(Asterisk)│ │ (read)   │
+         └─────────┘ └─────────┘ └──────────┘
+              │            │
+              ▼            ▼
+         ┌─────────────────────┐
+         │   Cisco IP Phone    │
+         │  (SEP<MAC>.cnf.xml) │
+         └─────────────────────┘
+```
 
 ## Requirements
 
 - Node.js 18+
 - MySQL 8+
 - npm
+- Asterisk (AMI)
+- FTP server (vsFTPd recommended)
+- TFTP server (read-only)
 
 ## Clone
 
@@ -20,6 +47,7 @@ cd cisisk
 
 ```bash
 npm install
+cd frontend && npm install && cd ..
 ```
 
 ## Configure environment
@@ -28,16 +56,40 @@ npm install
 cp .env.example .env
 ```
 
-Edit `.env` with your database credentials:
+Edit `.env` with your credentials:
 
 ```env
+# Database
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=
 DB_NAME=cisisk
 
+# JWT
 JWT_SECRET=change-this-to-a-random-string
+
+# FTP (write configs to phones)
+FTP_HOST=10.10.0.16
+FTP_USER=bernardo
+FTP_PASSWORD=your-password
+FTP_ROOT=/tftpboot
+
+# TFTP (read configs from phones)
+TFTP_HOST=10.10.0.16
+
+# Asterisk AMI (send SIP notify)
+AMI_HOST=10.10.0.16
+AMI_PORT=5038
+AMI_USER=cisisk
+AMI_SECRET=your-ami-secret
+
+# Phone HTTP (SCCP restart via CGI)
+PHONE_CGI_USER=cisco
+PHONE_CGI_PASSWORD=cisco
+
+# Frontend URL
+FRONTEND_URL=http://localhost:5173
 ```
 
 ## Create the database
@@ -46,22 +98,39 @@ JWT_SECRET=change-this-to-a-random-string
 mysql -u root < sql/init.sql
 ```
 
-This creates the `cisisk` database and all tables.
+This creates the `cisisk` and `cisisk_development` databases with all tables.
 
-## Start
+## Start backend
 
 ```bash
 npm run dev
 ```
 
-The API starts on the configured port (default `3000`).
+API starts on port `3000`.
+
+## Start frontend
+
+```bash
+cd frontend && npm run dev
+```
+
+Frontend starts on port `5173`.
+
+## Default permission
+
+The init script seeds a superadmin permission (level 0) with UUID `00000000-0000-0000-0000-000000000000`. Assign it to a user after creation:
+
+```
+POST /api/v1/user-perms
+{
+  "user_uuid": "<user-uuid>",
+  "perm_uuid": "00000000-0000-0000-0000-000000000000"
+}
+```
 
 ## Verify
 
 ```bash
-curl /api/v1/health
+curl http://localhost:3000/api/v1/health
+curl http://localhost:5173
 ```
-
-## Default permission
-
-The init script seeds a superadmin permission (level 0) with UUID `00000000-0000-0000-0000-000000000000`. Assign it to a user after creation via `POST /api/v1/user-perms`.
